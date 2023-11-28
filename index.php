@@ -5,6 +5,7 @@ use MiladRahimi\PhpRouter\Router;
 use Src\Controllers\AdminController;
 use Src\Controllers\AuthController;
 use Src\Controllers\CoursesController;
+use Src\Controllers\TeacherCoursesController;
 use Src\Controllers\MainController;
 use Src\Controllers\TeacherController;
 use Src\Middleware\AdminMiddleware;
@@ -23,6 +24,7 @@ $router = Router::create();
 $router->setupView('view');
 
 $router->get("/", [MainController::class,'indexPage']);
+$router->get("/courses-list", [CoursesController::class,'coursesListPage']);
 
 $router->get("/login", [AuthController::class, 'loginPage']);
 $router->post("/login", [AuthController::class, 'login']);
@@ -40,13 +42,13 @@ $router->group(
         $router->get('/reviews', [TeacherController::class, 'reviewsPage']);
         $router->get('/bookmarks', [TeacherController::class, 'bookmarksPage']);
 
-        $router->get('/add-listing', [CoursesController::class, 'addListingPage']);
-        $router->post('/add-listing', [CoursesController::class, 'createContent']);
+        $router->get('/add-listing', [TeacherCoursesController::class, 'addListingPage']);
+        $router->post('/add-listing', [TeacherCoursesController::class, 'createContent']);
 
-        $router->get('/courses', [CoursesController::class, 'coursesPage']);
-        $router->post('/courses', [CoursesController::class, 'createCourse']);
+        $router->get('/courses', [TeacherCoursesController::class, 'coursesPage']);
+        $router->post('/courses', [TeacherCoursesController::class, 'createCourse']);
 
-        $router->get('/add-contents/{id_course}', [CoursesController::class, 'addContentsPage']);
+        $router->get('/add-contents/{id_course}', [TeacherCoursesController::class, 'addContentsPage']);
 
         $router->get('/clear-sessions', function () {
             unset($_SESSION['user_id']);
