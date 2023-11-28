@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<?php
+require_once 'parts/head_profile.phtml';
+?>
+
+<body class="fixed-nav sticky-footer" id="page-top">
+  <!-- Navigation-->
+  <?php
+  require_once 'parts/nav_profile.phtml';
+  ?>
+  <!-- /Navigation-->
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Add listing</li>
+      </ol>
+		<form class="box_general padding_bottom" method="post" action="/add-listing">
+			<div class="header_box version_2">
+				<h2><i class="fa fa-file"></i>Basic info</h2>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Course title</label>
+						<input type="text" class="form-control" placeholder="Course title" name="name">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Course price</label>
+						<input type="text" class="form-control" placeholder="Course price" name="price">
+					</div>
+				</div>
+			</div>
+			<!-- /row-->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Course start</label>
+						<input type="date" class="form-control" placeholder="Course start" name="date_start">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Course end</label>
+						<input type="date" class="form-control" placeholder="Course end" name="date_end">
+					</div>
+				</div>
+			</div>
+			<!-- /row-->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Category</label>
+                        <select name="category" class="form-control">
+                            <option value="#" select hidden="hidden">Category</option>
+                            <?php foreach ($categories as $category): ?>
+                            <option value="<?=$category->id?>"><?=$category->name?></option>
+                            <?php endforeach;?>
+                        </select>
+					</div>
+				</div>
+			</div>
+			<!-- /row-->
+<!--			<div class="row">-->
+<!--				<div class="col-md-12">-->
+<!--					<div class="form-group">-->
+<!--						<label>Course picture</label>-->
+<!--						<div action="/file-upload" class="dropzone" ></div>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Course description</label>
+                        <textarea rows="5" class="form-control" style="height:100px;" placeholder="Description" name="description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="btn_1 medium" value="Save">
+			<!-- /row-->
+		</form>
+		<!-- /box_general-->
+
+	  </div>
+	  <!-- /.container-fluid-->
+   	</div>
+    <!-- /.container-wrapper-->
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="text-center">
+          <small>Copyright © UDEMA 2018</small>
+        </div>
+      </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+  <?php
+  require_once 'parts/modal_logout.phtml';
+  ?>
+    <!-- Bootstrap core JavaScript-->
+  <?php
+  require_once 'parts/scripts_profile.phtml';
+  ?>
+
+	
+</body>
+</html>

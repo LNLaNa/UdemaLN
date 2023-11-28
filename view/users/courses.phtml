@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<?php
+require_once 'parts/head_profile.phtml';
+?>
+
+<body class="fixed-nav sticky-footer" id="page-top">
+  <!-- Navigation-->
+  <?php
+  require_once 'parts/nav_profile.phtml';
+  ?>
+  <!-- /Navigation-->
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Your Courses</li>
+      </ol>
+		<div class="box_general">
+			<div class="header_box">
+				<h2 class="d-inline-block">Your Courses</h2>
+				<div class="filter">
+					<select name="orderby" class="selectbox">
+						<option value="Any status">Any status</option>
+						<option value="Approved">Started</option>
+						<option value="Pending">Pending</option>
+						<option value="Cancelled">Cancelled</option>
+					</select>
+				</div>
+			</div>
+			<div class="list_general">
+				<ul>
+                    <?php $courses=array_reverse($courses); foreach ($courses as $course):?>
+					<li>
+						<figure><img src="../../admin_section/img/course_1.jpg" alt=""></figure>
+<!--						<h4>Course title <i class="pending">Pending</i></h4>-->
+						<h4><?=$course->name?></h4>
+						<ul class="course_list">
+							<li><strong>Start date</strong><?=$course->date_start?></li>
+							<li><strong>Expire date</strong><?=$course->date_end?></li>
+							<li><strong>Category</strong><?=$course->categoryName?></li>
+							<li><strong>Teacher</strong><?=$course->nameUser?> <?=$course->lastNameUser?></li>
+						</ul>
+						<h6>Course description</h6> 
+                        <p><?=$course->description?></p>
+						<ul class="buttons">
+							<li><a href="/add-contents/<?=$course->id?>" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Add Lessons</a></li>
+<!--							<li><a href="#0" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Cancel</a></li>-->
+						</ul>
+					</li>
+                    <?php endforeach;?>
+				</ul>
+			</div>
+		</div>
+		<!-- /box_general-->
+		<nav aria-label="...">
+			<ul class="pagination pagination-sm add_bottom_30">
+				<li class="page-item disabled">
+					<a class="page-link" href="#" tabindex="-1">Previous</a>
+				</li>
+				<li class="page-item"><a class="page-link" href="#">1</a></li>
+				<li class="page-item"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item">
+					<a class="page-link" href="#">Next</a>
+				</li>
+			</ul>
+		</nav>
+		<!-- /pagination-->
+	  </div>
+	  <!-- /container-fluid-->
+   	</div>
+    <!-- /container-wrapper-->
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="text-center">
+          <small>Copyright © UDEMA 2018</small>
+        </div>
+      </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+  <?php
+  require_once 'parts/modal_logout.phtml';
+  ?>
+
+  <?php
+  require_once 'parts/scripts_profile.phtml';
+  ?>
+	
+</body>
+</html>
