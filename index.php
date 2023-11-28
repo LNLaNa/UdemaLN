@@ -25,6 +25,7 @@ $router->setupView('view');
 
 $router->get("/", [MainController::class,'indexPage']);
 $router->get("/courses-list", [CoursesController::class,'coursesListPage']);
+$router->get("/courses-detail/{id}", [CoursesController::class,'courseDetailPage']);
 
 $router->get("/login", [AuthController::class, 'loginPage']);
 $router->post("/login", [AuthController::class, 'login']);
