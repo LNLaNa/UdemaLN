@@ -40,7 +40,7 @@
 			<a href="/"><img src="../img/logo.png" width="149" height="42" alt=""></a>
 		</div>
 		<ul id="top_menu">
-			<li><a href="login.html" class="login">Login</a></li>
+			<li><a <?php if (isset($_SESSION['user_id'])):?> href="/profile" <?php else:?>  href="/login"<?php endif;?> class="login">Login</a></li>
 			<li><a href="#0" class="search-overlay-menu-btn">Search</a></li>
 			<li class="hidden_tablet"><a href="admission.html" class="btn_1 rounded">Admission</a></li>
 		</ul>
@@ -54,7 +54,7 @@
 		</a>
 		<nav id="menu" class="main-menu">
 			<ul>
-				<li><span><a href="#0">Home</a></span>
+				<li><span><a href="/">Home</a></span>
 					<ul>
 						<li><a href="index.html">Home Default</a></li>
 						<li><a href="index-8.html">KenBurns Slider <strong>New!</strong></a></li>
@@ -66,7 +66,7 @@
 						<li><a href="index-5.html">With Cookie bar (EU law)</a></li>
 					</ul>
 				</li>
-				<li><span><a href="#0">Courses</a></span>
+				<li><span><a href="/courses-list">Courses</a></span>
 <!--					<ul>-->
 <!--						<li><a href="courses-grid.html">Courses grid</a></li>-->
 <!--						<li><a href="courses-grid-sidebar.html">Courses grid sidebar</a></li>-->
@@ -323,7 +323,9 @@
 							<hr>
 
 							<div class="reviews-container">
-
+                                <?php foreach ($reviews as $review):
+                                    $newDate = date("d F, Y", strtotime($review['date']));
+                                    ?>
 								<div class="review-box clearfix">
 									<figure class="rev-thumb"><img src="../img/avatar1.jpg" alt="">
 									</figure>
@@ -332,23 +334,25 @@
 											<i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
 										</div>
 										<div class="rev-info">
-											Admin – April 03, 2016:
+<!--                                            --><?php //=$review['user_id']?><!-- – --><?php //=$review['date']?><!--:-->
+                                            <?=$review['userName']?> – <?=$newDate?>:
 										</div>
 										<div class="rev-text">
 											<p>
-												Sed eget turpis a pede tempor malesuada. Vivamus quis mi at leo pulvinar hendrerit. Cum sociis natoque penatibus et magnis dis
+												<?=$review['review']?>
 											</p>
 										</div>
 									</div>
 								</div>
+                                <?php endforeach;?>
 							</div>
                             <h5>Leave a Review</h5>
-                            <form>
+                            <form method="post" action="/review-create/<?=$course['id']?>">
                                 <div class="form-group">
-                                    <textarea class="form-control" name="comments" id="comments2" rows="6" placeholder="Message Below"></textarea>
+                                    <textarea class="form-control" name="review" id="comments2" rows="6" placeholder="Message Below"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" id="submit2" class="btn_1 rounded add_bottom_30"> Submit</button>
+                                    <input type="submit" id="submit2" class="btn_1 rounded add_bottom_30" value="Submit" required>
                                 </div>
                             </form>
 							<!-- /review-container -->
@@ -366,16 +370,9 @@
 								$<?=$course['price']?>
 							</div>
 							<a href="#0" class="btn_1 full-width">Purchase</a>
-							<a href="#0" class="btn_1 full-width outline"><i class="icon_heart"></i> Add to wishlist</a>
+							<a href="/whishList?course_id=<?=$course['id']?>" class="btn_1 full-width outline"><i class="icon_heart"></i> Add to wishlist</a>
 							<div id="list_feat">
-								<h3>What's includes</h3>
-								<ul>
-									<li><i class="icon_mobile"></i>Mobile support</li>
-									<li><i class="icon_archive_alt"></i>Lesson archive</li>
-									<li><i class="icon_mobile"></i>Mobile support</li>
-									<li><i class="icon_chat_alt"></i>Tutor chat</li>
-									<li><i class="icon_document_alt"></i>Course certificate</li>
-								</ul>
+                                <a href="/"><h3>Teacher: <?=$course['userName']?> <?=$course['userLastName']?></h3></a>
 							</div>
 						</div>
 					</aside>

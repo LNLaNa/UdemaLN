@@ -27,6 +27,8 @@ $router->get("/", [MainController::class,'indexPage']);
 $router->get("/courses-list", [CoursesController::class,'coursesListPage']);
 $router->get("/courses-detail/{id}", [CoursesController::class,'courseDetailPage']);
 
+$router->post('/review-create/{id_course}', [TeacherCoursesController::class, 'reviewCreate']);
+
 $router->get("/login", [AuthController::class, 'loginPage']);
 $router->post("/login", [AuthController::class, 'login']);
 
@@ -43,11 +45,14 @@ $router->group(
         $router->get('/reviews', [TeacherController::class, 'reviewsPage']);
         $router->get('/bookmarks', [TeacherController::class, 'bookmarksPage']);
 
+        $router->get('/whishList', [TeacherCoursesController::class, 'whishList']);
+
+
         $router->get('/add-listing', [TeacherCoursesController::class, 'addListingPage']);
-        $router->post('/add-listing', [TeacherCoursesController::class, 'createContent']);
+        $router->post('/add-listing', [TeacherCoursesController::class, 'createCourse']);
 
         $router->get('/courses', [TeacherCoursesController::class, 'coursesPage']);
-        $router->post('/courses', [TeacherCoursesController::class, 'createCourse']);
+//        $router->post('/courses', [TeacherCoursesController::class, 'createCourse']);
 
         $router->get('/add-contents/{id_course}', [TeacherCoursesController::class, 'addContentsPage']);
 

@@ -56,4 +56,49 @@ class TeacherCoursesController
         $course = ORM::for_table('courses')->findOne($id_course);
         return $view->make('users.add-content',['course' => $course]);
     }
+
+
+    public function reviewCreate(ServerRequest $request, $id_course)
+    {
+        $body = $request->getParsedBody();
+
+        date_default_timezone_set('Asia/Krasnoyarsk');
+        $date = date('Y-m-d');
+
+        if (isset($_SESSION['user_id'])){
+            $reviews = ORM::for_table('reviews')->create();
+            $reviews->review = $body['review'];
+            $reviews->user_id = $_SESSION['user_id'];
+            $reviews->course_id = $id_course;
+            $reviews->date = $date;
+
+            $reviews->save();
+
+            return new  RedirectResponse('/courses-detail/'.$id_course);
+        }
+        else return new  RedirectResponse('/login');
+
+    }
+
+    public function whishList()
+    {
+        $course_id =  $_GET['course_id'];
+        $user_id =  $_SESSION['user_id'];
+
+
+        $isLike = ORM::for_table('whishList')->where('course_id', $course_id)->where('user_id', $user_id)->findOne();
+
+        if ($isLike) {
+            $isLike->delete();
+        } else {
+            $like = ORM::for_table('whishList')->create();
+            $like->course_id = $course_id;
+            $like->user_id = $user_id;
+            $like->save();
+
+        }
+        $referer = isset($_SERVER['HTTP_REFERER'])? $_SERVER['HTTP_REFERER']:'/';
+        return new RedirectResponse($referer);
+//        return new RedirectResponse('/course-detail/'.$course_id);
+    }
 }
