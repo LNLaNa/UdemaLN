@@ -33,36 +33,18 @@ require_once 'parts/head_profile.phtml';
 			</div>
 			<div class="list_general">
 				<ul>
+                    <?php foreach ($bookmarks as $bookmark):?>
 					<li>
-						<figure><img src="img/course_1.jpg" alt=""></figure>
-						<small>Science - Biology</small>
-						<h4>Course Title</h4>
-						<p>Lorem ipsum dolor sit amet, est ei idque voluptua copiosae, pro detracto disputando reformidans at, ex vel suas eripuit. Vel alii zril maiorum ex, mea id sale eirmod epicurei. Sit te possit senserit, eam alia veritus maluisset ei, id cibo vocent ocurreret per....</p>
-						<p><a href="#0" class="btn_1 gray"><i class="fa fa-fw fa-eye"></i> View course</a></p>
+						<figure><img src="../../admin_section/img/course_1.jpg" alt=""></figure>
+						<small><?=$bookmark['categoriesName']?></small>
+						<h4><?=$bookmark['coursesName']?></h4>
+						<p><?=$bookmark['coursesDescription']?></p>
+						<p><a href="/courses-detail/<?=$bookmark['courseId']?>" class="btn_1 gray"><i class="fa fa-fw fa-eye"></i> View course</a></p>
 						<ul class="buttons">
-							<li><a href="#0" class="btn_1 gray delete wishlist_close"><i class="fa fa-fw fa-times-circle-o"></i> Cancel</a></li>
+							<li><a href="/wishList?course_id=<?=$bookmark['courseId']?>" class="btn_1 gray delete wishlist_close"><i class="fa fa-fw fa-times-circle-o"></i> Cancel</a></li>
 						</ul>
 					</li>
-					<li>
-						<figure><img src="img/course_2.jpg" alt=""></figure>
-						<small>Science - Biology</small>
-						<h4>Course Title</h4>
-						<p>Lorem ipsum dolor sit amet, est ei idque voluptua copiosae, pro detracto disputando reformidans at, ex vel suas eripuit. Vel alii zril maiorum ex, mea id sale eirmod epicurei. Sit te possit senserit, eam alia veritus maluisset ei, id cibo vocent ocurreret per....</p>
-						<p><a href="#0" class="btn_1 gray"><i class="fa fa-fw fa-eye"></i> View course</a></p>
-						<ul class="buttons">
-							<li><a href="#0" class="btn_1 gray delete wishlist_close"><i class="fa fa-fw fa-times-circle-o"></i> Cancel</a></li>
-						</ul>
-					</li>
-					<li>
-						<figure><img src="img/course_3.jpg" alt=""></figure>
-						<small>Science - Biology</small>
-						<h4>Course Title</h4>
-						<p>Lorem ipsum dolor sit amet, est ei idque voluptua copiosae, pro detracto disputando reformidans at, ex vel suas eripuit. Vel alii zril maiorum ex, mea id sale eirmod epicurei. Sit te possit senserit, eam alia veritus maluisset ei, id cibo vocent ocurreret per....</p>
-						<p><a href="#0" class="btn_1 gray"><i class="fa fa-fw fa-eye"></i> View course</a></p>
-						<ul class="buttons">
-							<li><a href="#0" class="btn_1 gray delete wishlist_close"><i class="fa fa-fw fa-times-circle-o"></i> Cancel</a></li>
-						</ul>
-					</li>
+                    <?php endforeach; ?>
 				</ul>
 			</div>
 		</div>

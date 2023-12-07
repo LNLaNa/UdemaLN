@@ -28,6 +28,56 @@
     <!-- YOUR CUSTOM CSS -->
     <link href="../css/custom.css" rel="stylesheet">
 
+    <style>
+        .rating-area {
+            margin: 0 0 20px 0;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: start;
+            gap: 5px;
+            width: 200px;
+        }
+
+        .rating-area:not(:checked) > input {
+            display: none;
+        }
+
+        .rating-area:not(:checked) > label {
+            float: right;
+            width: 30px;
+            padding: 0;
+            cursor: pointer;
+            font-size: 30px;
+            line-height: 30px;
+            color: #ddd;
+            /*text-shadow: 1px 1px rgba(0, 0, 0, 0.5);*/
+        }
+
+
+        .rating-area:not(:checked) > label:before {
+            content: '★';
+        }
+
+        .rating-area > input:checked ~ label {
+            color: #ffc107;
+            /*text-shadow: 1px 1px #3D0102;*/
+        }
+
+        .rating-area:not(:checked) > label:hover,
+        .rating-area:not(:checked) > label:hover ~ label {
+            color: #ffc107;
+        }
+
+        .rating-area > input:checked + label:hover,
+        .rating-area > input:checked + label:hover ~ label,
+        .rating-area > input:checked ~ label:hover,
+        .rating-area > input:checked ~ label:hover ~ label,
+        .rating-area > label:hover ~ input:checked ~ label {
+            color: #ffc107;
+            /*text-shadow: 1px 1px #3D0102;*/
+        }
+    </style>
+
 </head>
 
 <body>
@@ -331,10 +381,17 @@
 									</figure>
 									<div class="rev-content">
 										<div class="rating">
-											<i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+                                            <?php $r = 5;
+                                            for ($i = 0; $i<$review['rating'];$i++){?>
+                                                <i class="icon_star voted"></i>
+                                            <?php } ?>
+                                            <?php if ($review['rating']<5)
+                                            for ($i=0; $i<($r-$review['rating']);$i++){?>
+                                            <i class="icon_star"></i>
+                                            <?php } ?>
+
 										</div>
 										<div class="rev-info">
-<!--                                            --><?php //=$review['user_id']?><!-- – --><?php //=$review['date']?><!--:-->
                                             <?=$review['userName']?> – <?=$newDate?>:
 										</div>
 										<div class="rev-text">
@@ -351,9 +408,23 @@
                                 <div class="form-group">
                                     <textarea class="form-control" name="review" id="comments2" rows="6" placeholder="Message Below"></textarea>
                                 </div>
+                                    <div class="rating-area">
+                                        <input type="radio" id="star-5" name="rating" value="5">
+                                        <label for="star-5" title="Оценка «5»"></label>
+                                        <input type="radio" id="star-4" name="rating" value="4">
+                                        <label for="star-4" title="Оценка «4»"></label>
+                                        <input type="radio" id="star-3" name="rating" value="3">
+                                        <label for="star-3" title="Оценка «3»"></label>
+                                        <input type="radio" id="star-2" name="rating" value="2">
+                                        <label for="star-2" title="Оценка «2»"></label>
+                                        <input type="radio" id="star-1" name="rating" value="1">
+                                        <label for="star-1" title="Оценка «1»"></label>
+                                    </div>
+
                                 <div class="form-group">
                                     <input type="submit" id="submit2" class="btn_1 rounded add_bottom_30" value="Submit" required>
                                 </div>
+
                             </form>
 							<!-- /review-container -->
 						</section>
@@ -370,7 +441,7 @@
 								$<?=$course['price']?>
 							</div>
 							<a href="#0" class="btn_1 full-width">Purchase</a>
-							<a href="/whishList?course_id=<?=$course['id']?>" class="btn_1 full-width outline"><i class="icon_heart"></i> Add to wishlist</a>
+							<a href="/wishList?course_id=<?=$course['id']?>" class="btn_1 full-width outline"><i class="icon_heart"></i> Add to wishlist</a>
 							<div id="list_feat">
                                 <a href="/"><h3>Teacher: <?=$course['userName']?> <?=$course['userLastName']?></h3></a>
 							</div>

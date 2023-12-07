@@ -141,27 +141,38 @@
 				<aside class="col-lg-3" id="sidebar">
 					<div id="filters_col"> <a data-bs-toggle="collapse" href="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters" id="filters_col_bt">Filters </a>
 						<div class="collapse show" id="collapseFilters">
-							<div class="filter_type">
+							<form class="filter_type" method="post" action="/filter">
 								<h6>Category</h6>
 								<ul>
+
+                                    <?php
+
+                                    $number_courses = ORM::for_table('courses')->where('status', 'Started')->count();
+                                    ?>
 									<li>
 										<label>
-											<input type="checkbox" class="icheck" checked>all <small>(945)</small>
+											<input type="checkbox" class="icheck" id="checkboxAll" checked name="categoriesFilter[]">all <small>(<?=$number_courses?>)</small>
 										</label>
 									</li>
                                     <?php
                                     foreach ($categories as $category):
-                                    $number_course = ORM::for_table('courses')->where('category_id', $category['id'])->count();
+                                    $number_course = ORM::for_table('courses')->where('category_id', $category['id'])->where('status', 'Started')->count();
                                     ?>
 
 									<li>
 										<label>
-											<input type="checkbox" class="icheck"><?=$category['name']?><small> (<?=$number_course?>)</small>
+											<input type="checkbox" class="icheck" name="categoriesFilter[]"><?=$category['name']?><small> (<?=$number_course?>)</small>
 										</label>
 									</li>
                                     <?php endforeach;?>
+
+<!--                                    --><?php
+//                                   $categoriesFilter = $_POST["categoriesFilter"];
+//                                    foreach($categoriesFilter as $item) echo "$item<br />";
+//                                    ?>
 								</ul>
-							</div>
+                                    <input type="submit" id="submit2" class="btn_1 rounded add_bottom_20" value="Submit" required>
+							</form>
 <!--							<div class="filter_type">-->
 <!--								<h6>Rating</h6>-->
 <!--								<ul>-->
@@ -205,7 +216,9 @@
 				<!-- /aside -->
 
 				<div class="col-lg-9" id="list_sidebar">
-                    <?php foreach ($courses as $course):?>
+                    <?php foreach ($courses as $course):
+                        $wishList = ORM::for_table('wishList')->where('user_id', $_SESSION['user_id'])->where('course_id', $course->id)->findOne();
+                        ?>
                         <div class="box_list wow">
                             <div class="row g-0">
                                 <div class="col-xl-4 col-lg-5">
@@ -217,7 +230,7 @@
                                 </div>
                                 <div class="col-xl-8 col-lg-7">
                                     <div class="wrapper">
-                                        <a href="#0" class="wish_bt"></a>
+                                        <a href="/wishList?course_id=<?=$course['id']?>" class="wish_bt" <?php if ($wishList):?>style='content:"\e089";color:#ffffff;background-color: #92278f;'<?php endif;?>></a>
                                         <div class="price">$<?=$course['price']?></div>
                                         <small><?=$course['categoryName']?></small>
                                         <h3><?=$course['name']?></h3>
@@ -340,10 +353,10 @@
 	<!-- page -->
 
 	<!-- COMMON SCRIPTS -->
-    <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="js/common_scripts.js"></script>
-    <script src="js/main.js"></script>
-	<script src="assets/validate.js"></script>
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/common_scripts.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../assets/validate.js"></script>
   
 </body>
 </html>

@@ -25,6 +25,7 @@ $router->setupView('view');
 
 $router->get("/", [MainController::class,'indexPage']);
 $router->get("/courses-list", [CoursesController::class,'coursesListPage']);
+$router->post("/filter", [CoursesController::class,'filterCourses']);
 $router->get("/courses-detail/{id}", [CoursesController::class,'courseDetailPage']);
 
 $router->post('/review-create/{id_course}', [TeacherCoursesController::class, 'reviewCreate']);
@@ -45,7 +46,7 @@ $router->group(
         $router->get('/reviews', [TeacherController::class, 'reviewsPage']);
         $router->get('/bookmarks', [TeacherController::class, 'bookmarksPage']);
 
-        $router->get('/whishList', [TeacherCoursesController::class, 'whishList']);
+        $router->get('/wishList', [TeacherCoursesController::class, 'wishList']);
 
 
         $router->get('/add-listing', [TeacherCoursesController::class, 'addListingPage']);

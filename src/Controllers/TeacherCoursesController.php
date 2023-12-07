@@ -70,6 +70,7 @@ class TeacherCoursesController
             $reviews->review = $body['review'];
             $reviews->user_id = $_SESSION['user_id'];
             $reviews->course_id = $id_course;
+            $reviews->rating = $body['rating'];
             $reviews->date = $date;
 
             $reviews->save();
@@ -80,18 +81,18 @@ class TeacherCoursesController
 
     }
 
-    public function whishList()
+    public function wishList()
     {
         $course_id =  $_GET['course_id'];
         $user_id =  $_SESSION['user_id'];
 
 
-        $isLike = ORM::for_table('whishList')->where('course_id', $course_id)->where('user_id', $user_id)->findOne();
+        $isLike = ORM::for_table('wishList')->where('course_id', $course_id)->where('user_id', $user_id)->findOne();
 
         if ($isLike) {
             $isLike->delete();
         } else {
-            $like = ORM::for_table('whishList')->create();
+            $like = ORM::for_table('wishList')->create();
             $like->course_id = $course_id;
             $like->user_id = $user_id;
             $like->save();
@@ -99,6 +100,6 @@ class TeacherCoursesController
         }
         $referer = isset($_SERVER['HTTP_REFERER'])? $_SERVER['HTTP_REFERER']:'/';
         return new RedirectResponse($referer);
-//        return new RedirectResponse('/course-detail/'.$course_id);
     }
+
 }

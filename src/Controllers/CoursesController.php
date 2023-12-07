@@ -10,17 +10,23 @@ class CoursesController
     public function coursesListPage(View $view)
     {
         $categories = ORM::for_table('categories')->find_many();
+
         $courses = ORM::for_table('courses')
             ->table_alias('courses')
             ->select('courses.*')
             ->select('categories.name', 'categoryName')
             ->join('categories', array('courses.category_id', '=', 'categories.id'), 'categories')
-            ->where_not_equal('status', 'Pending')
+//            ->where_not_equal('status', 'Pending')
+            ->where('status', 'Started')
             ->find_many();
+
+
+
 
         return $view->make('courses-list-sidebar',[
             'courses'=>$courses,
             'categories'=>$categories,
+//            'wishList'=>$wishList,
         ]);
     }
 
@@ -47,5 +53,10 @@ class CoursesController
             'reviews'=>$reviews,
 //            'newDate'=>$newDate,
         ]);
+    }
+
+    public function filterCourses()
+    {
+        var_dump();
     }
 }

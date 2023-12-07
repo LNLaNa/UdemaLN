@@ -16,7 +16,18 @@ class TeacherController
 
     public function bookmarksPage(View $view)
     {
-        return $view->make('users.bookmarks');
+        $bookmarks = ORM::for_table('wishList')
+            ->table_alias('wishList')
+            ->select('wishList.*')
+            ->select('courses.name', 'coursesName')
+            ->select('courses.description', 'coursesDescription')
+            ->select('courses.id', 'courseId')
+            ->select('categories.name', 'categoriesName')
+            ->join('courses', array('wishList.course_id', '=', 'courses.id'), 'courses')
+            ->join('categories', array('courses.category_id', '=', 'categories.id'), 'categories')
+            ->where('user_id',$_SESSION['user_id'])
+            ->findMany();
+        return $view->make('users.bookmarks',['bookmarks'=>$bookmarks]);
     }
 
     public function profilePage(View $view)
