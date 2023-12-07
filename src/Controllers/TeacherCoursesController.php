@@ -54,7 +54,8 @@ class TeacherCoursesController
     public function addContentsPage(View $view,$id_course)
     {
         $course = ORM::for_table('courses')->findOne($id_course);
-        return $view->make('users.add-content',['course' => $course]);
+        $lessons = ORM::for_table('lessons')->where('course_id',$id_course)->findMany();
+        return $view->make('users.add-content',['course' => $course,'lessons' => $lessons]);
     }
 
 
@@ -100,6 +101,22 @@ class TeacherCoursesController
         }
         $referer = isset($_SERVER['HTTP_REFERER'])? $_SERVER['HTTP_REFERER']:'/';
         return new RedirectResponse($referer);
+    }
+
+    public function createLesson(ServerRequest $request,$id_course)
+    {
+        $body = $request->getParsedBody();
+
+        $lesson = ORM::for_table('lessons')->create();
+        $lesson->name = $body['name'];
+        $lesson->category = $body['category'];
+        $lesson->url = $body['url'];
+        $lesson->course_id = $id_course;
+
+
+        $lesson->save();
+
+        return new RedirectResponse('/add-contents/'.$id_course);
     }
 
 }

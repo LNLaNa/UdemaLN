@@ -26,7 +26,25 @@ require_once 'parts/head_profile.phtml';
 			<div class="header_box version_2">
 				<h2><?php echo $course->name ?></h2>
 			</div>
-			<form class="row">
+            <table style="width: 600px">
+                <thead style="font-weight: bold">
+                <tr>
+                    <td>Title</td>
+                    <td>Category</td>
+                    <td>URL</td>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($lessons as $lesson):?>
+                <tr>
+                    <td><?=$lesson['name']?></td>
+                    <td><?=$lesson['category']?></td>
+                    <td><?=$lesson['url']?></td>
+                </tr>
+                <?php endforeach;?>
+                </tbody>
+            </table>
+			<form class="row" method="post" action="/add-contents/<?=$course['id']?>">
 				<div class="col-md-12">
 					<h6>Item</h6>
 					<table id="pricing-list-container" style="width:100%;">
@@ -35,17 +53,17 @@ require_once 'parts/head_profile.phtml';
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group">
-											<input type="text" class="form-control" placeholder="Video title">
+											<input type="text" class="form-control" placeholder="Video title" name="name">
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<input type="text" class="form-control" placeholder="Video category">
+											<input type="text" class="form-control" placeholder="Video category" name="category">
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<input type="text" class="form-control"  placeholder="Video URL">
+											<input type="text" class="form-control"  placeholder="Video URL" name="url">
 										</div>
 									</div>
 									<div class="col-md-2">
@@ -57,8 +75,8 @@ require_once 'parts/head_profile.phtml';
 							</td>
 						</tr>
 					</table>
-					<a href="#0" class="btn_1 gray add-pricing-list-item"><i class="fa fa-fw fa-plus-circle"></i>Add Item</a>
-					</div>
+<!--					<a href="#0" class="btn_1 gray add-pricing-list-item"><i class="fa fa-fw fa-plus-circle"></i>Add Item</a>-->
+                </div>
                 <input type="submit" class="btn_1 medium" value="Save" style="margin-top: 20px;margin-left: 15px">
 			</form>
 			<!-- /row-->

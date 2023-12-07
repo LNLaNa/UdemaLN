@@ -2,6 +2,7 @@
 
 namespace Src\Controllers;
 
+use Laminas\Diactoros\Response\RedirectResponse;
 use MiladRahimi\PhpRouter\View\View;
 use ORM;
 
@@ -11,22 +12,46 @@ class CoursesController
     {
         $categories = ORM::for_table('categories')->find_many();
 
-        $courses = ORM::for_table('courses')
-            ->table_alias('courses')
-            ->select('courses.*')
-            ->select('categories.name', 'categoryName')
-            ->join('categories', array('courses.category_id', '=', 'categories.id'), 'categories')
+        if(isset($_POST["categoriesFilter"]))
+        {
+            $categoriesFilter = $_POST["categoriesFilter"];
+            if ($categoriesFilter == 'all'){
+                $courses = ORM::for_table('courses')
+                    ->table_alias('courses')
+                    ->select('courses.*')
+                    ->select('categories.name', 'categoryName')
+                    ->join('categories', array('courses.category_id', '=', 'categories.id'), 'categories')
+                    //            ->where_not_equal('status', 'Pending')
+                    ->where('status', 'Started')
+                    ->find_many();
+            } else {
+//                var_dump($categoriesFilter);
+//                $('#checkboxAll').checked = false;
+                $courses = ORM::for_table('courses')
+                    ->table_alias('courses')
+                    ->select('courses.*')
+                    ->select('categories.name', 'categoryName')
+                    ->join('categories', array('courses.category_id', '=', 'categories.id'), 'categories')
 //            ->where_not_equal('status', 'Pending')
-            ->where('status', 'Started')
-            ->find_many();
-
-
+                    ->where('status', 'Started')
+                    ->where('category_id',$categoriesFilter)
+                    ->find_many();
+            }
+        }
+        else
+            $courses = ORM::for_table('courses')
+                ->table_alias('courses')
+                ->select('courses.*')
+                ->select('categories.name', 'categoryName')
+                ->join('categories', array('courses.category_id', '=', 'categories.id'), 'categories')
+    //            ->where_not_equal('status', 'Pending')
+                ->where('status', 'Started')
+                ->find_many();
 
 
         return $view->make('courses-list-sidebar',[
             'courses'=>$courses,
             'categories'=>$categories,
-//            'wishList'=>$wishList,
         ]);
     }
 
@@ -47,16 +72,14 @@ class CoursesController
             ->join('users', array('courses.user_id', '=', 'users.id'), 'users')
             ->findOne($id);
 
+        $lessons = ORM::for_table('lessons')->where('course_id', $id)->findMany();
+//        ->groupBy('category')
 
         $view->make('course-detail',[
             'course'=>$course,
             'reviews'=>$reviews,
-//            'newDate'=>$newDate,
+            'lessons'=>$lessons,
         ]);
     }
 
-    public function filterCourses()
-    {
-        var_dump();
-    }
 }

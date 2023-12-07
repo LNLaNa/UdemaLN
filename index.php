@@ -25,7 +25,8 @@ $router->setupView('view');
 
 $router->get("/", [MainController::class,'indexPage']);
 $router->get("/courses-list", [CoursesController::class,'coursesListPage']);
-$router->post("/filter", [CoursesController::class,'filterCourses']);
+$router->post("/courses-list", [CoursesController::class,'coursesListPage']);
+//$router->post("/filter", [CoursesController::class,'filterCourses']);
 $router->get("/courses-detail/{id}", [CoursesController::class,'courseDetailPage']);
 
 $router->post('/review-create/{id_course}', [TeacherCoursesController::class, 'reviewCreate']);
@@ -56,6 +57,7 @@ $router->group(
 //        $router->post('/courses', [TeacherCoursesController::class, 'createCourse']);
 
         $router->get('/add-contents/{id_course}', [TeacherCoursesController::class, 'addContentsPage']);
+        $router->post('/add-contents/{id_course}', [TeacherCoursesController::class, 'createLesson']);
 
         $router->get('/clear-sessions', function () {
             unset($_SESSION['user_id']);
